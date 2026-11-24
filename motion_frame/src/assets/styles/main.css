@@ -1,0 +1,142 @@
+/* Цвета оценены на глаз по логотипу. Сверить с исходником и поправить здесь */
+:root {
+  --color-bg: #0a0a0a;
+  --color-surface: #141413;
+  --color-light: #f1f1ec;
+  --color-text: #f1f1ec;
+  --color-muted: #b4b4ac;
+  --color-ink: #0a0a0a;
+  --color-ink-muted: #56564f;
+  --color-accent: #c8ff3e;
+  --color-error: #ff8a7a;
+  /* Серые ступени логотипа: только для декора, не для текста */
+  --gray-1: #222220;
+  --gray-2: #4a4a45;
+  --gray-3: #757570;
+
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --header-h: 64px;
+  --gutter: 16px;
+  --container: 1200px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 768px) {
+  :root { --gutter: 32px; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, video, svg { display: block; max-width: 100%; }
+
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+p { margin: 0; }
+a { color: inherit; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.section--light :focus-visible { outline-color: var(--color-ink); }
+
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: 72px;
+  scroll-margin-top: var(--header-h);
+}
+
+@media (min-width: 960px) {
+  .section { padding-block: 120px; }
+}
+
+.section--light {
+  background: var(--color-light);
+  color: var(--color-ink);
+}
+
+.section-head { margin-bottom: 40px; max-width: 760px; }
+
+.eyebrow {
+  margin-bottom: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.section--light .eyebrow { color: var(--color-ink-muted); }
+
+.section-title { font-size: clamp(34px, 8.5vw, 64px); }
+
+/* Уголки видоискателя, как в логотипе */
+.frame {
+  --frame-color: var(--color-light);
+  --frame-len: 18px;
+  --frame-w: 2px;
+  background:
+    linear-gradient(var(--frame-color), var(--frame-color)) top left / var(--frame-len) var(--frame-w),
+    linear-gradient(var(--frame-color), var(--frame-color)) top left / var(--frame-w) var(--frame-len),
+    linear-gradient(var(--frame-color), var(--frame-color)) top right / var(--frame-len) var(--frame-w),
+    linear-gradient(var(--frame-color), var(--frame-color)) top right / var(--frame-w) var(--frame-len),
+    linear-gradient(var(--frame-color), var(--frame-color)) bottom left / var(--frame-len) var(--frame-w),
+    linear-gradient(var(--frame-color), var(--frame-color)) bottom left / var(--frame-w) var(--frame-len),
+    linear-gradient(var(--frame-color), var(--frame-color)) bottom right / var(--frame-len) var(--frame-w),
+    linear-gradient(var(--frame-color), var(--frame-color)) bottom right / var(--frame-w) var(--frame-len);
+  background-repeat: no-repeat;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 100;
+  padding: 12px 16px;
+  background: var(--color-accent);
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.skip-link:focus { top: 16px; }
