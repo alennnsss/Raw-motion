@@ -33,10 +33,8 @@ const describedby = computed(
 .field { display: grid; gap: 8px; }
 
 .field__label {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
 }
 
 .field__required { color: var(--color-accent); }

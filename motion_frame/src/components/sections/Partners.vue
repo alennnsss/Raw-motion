@@ -6,7 +6,7 @@ import { partners } from '@/data/partners'
 <template>
   <section id="partners" class="partners" aria-labelledby="partners-title">
     <div class="container">
-      <h2 id="partners-title" class="eyebrow partners__title">С нами сотрудничают</h2>
+      <h2 id="partners-title" class="partners__title">С нами сотрудничают</h2>
     </div>
     <Marquee :items="partners" label="логотипы партнёров" :duration="28">
       <template #default="{ item, hidden }">
@@ -31,7 +31,14 @@ import { partners } from '@/data/partners'
   border-block: 1px solid var(--gray-1);
 }
 
-.partners__title { text-align: center; font-weight: 500; }
+.partners__title {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-align: center;
+  color: var(--color-muted);
+}
 
 .partners__link {
   display: block;

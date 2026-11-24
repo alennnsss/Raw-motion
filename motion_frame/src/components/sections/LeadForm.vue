@@ -36,9 +36,8 @@ watch(status, async (value) => {
   <section id="lead" ref="root" class="section lead" aria-labelledby="lead-title">
     <div class="container lead__inner">
       <div class="lead__intro">
-        <p class="eyebrow">Заявка</p>
-        <SplitHeading id="lead-title" class="section-title" text="Обсудим ваш ролик" accent="ролик" />
-        <p class="lead__text">Оставьте контакты: ответим, уточним задачу и назовём точную стоимость.</p>
+        <SplitHeading id="lead-title" class="section-title" text="Оставить заявку" />
+        <p class="section-intro">Расскажите, что нужно смонтировать. Мы ответим, уточним детали и назовём точную стоимость.</p>
       </div>
 
       <div class="lead__card frame" data-reveal>

@@ -20,9 +20,8 @@ useReveal(root)
     <div class="container">
       <div class="section-head portfolio__head">
         <div>
-          <p class="eyebrow">Портфолио</p>
-          <SplitHeading id="portfolio-title" class="section-title" text="Работы, которые смотрят" accent="смотрят" />
-          <p class="portfolio__lead">Больше 100 смонтированных роликов для экспертов, брендов и бизнеса.</p>
+          <SplitHeading id="portfolio-title" class="section-title" text="Наши работы" />
+          <p class="section-intro">Мы смонтировали больше 100 роликов. Здесь собраны некоторые из них.</p>
         </div>
         <button v-if="hasPreviews" type="button" class="portfolio__pause" :aria-pressed="paused" @click="paused = !paused">
           {{ paused ? 'Включить превью' : 'Остановить превью' }}
@@ -49,8 +48,6 @@ useReveal(root)
   gap: 24px;
   max-width: none;
 }
-
-.portfolio__lead { margin-top: 20px; color: var(--color-muted); max-width: 32em; }
 
 .portfolio__pause {
   padding: 10px 16px;

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import { X } from 'lucide-vue-next'
 import type { PortfolioItem } from '@/types'
 
 const props = defineProps<{ item: PortfolioItem | null }>()
@@ -21,7 +22,7 @@ watch(
   <dialog ref="dialog" class="modal" :aria-label="item?.title" @close="emit('close')" @click.self="dialog?.close()">
     <div v-if="item" class="modal__body">
       <button class="modal__close" type="button" aria-label="Закрыть видео" @click="dialog?.close()">
-        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" /></svg>
+        <X :size="24" aria-hidden="true" />
       </button>
       <video
         class="modal__video"

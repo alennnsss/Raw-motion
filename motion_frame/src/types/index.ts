@@ -1,6 +1,11 @@
+import type { Component } from 'vue'
+
 export interface Service {
   title: string
   description: string
+  icon: Component
+  /** Площадки и форматы, показываются чипами только у главной услуги */
+  tags?: string[]
 }
 
 export interface PortfolioItem {
@@ -20,7 +25,10 @@ export interface PortfolioItem {
 
 export interface PriceItem {
   service: string
+  note: string
   price: number
+  /** Сколько роликов в пакете: показываем цену за один */
+  units?: number
 }
 
 export interface Partner {
@@ -38,6 +46,7 @@ export interface FaqItem {
 export interface ProcessStep {
   title: string
   text: string
+  icon: Component
 }
 
 export interface NavLink {

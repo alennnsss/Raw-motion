@@ -1,6 +1,13 @@
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 
 export type FormStatus = 'idle' | 'loading' | 'success' | 'error'
+
+// Выбор тарифа в «Ценах» подставляется в описание задачи, чтобы не печатать его заново
+const TOPIC_PREFIX = 'Интересует: '
+const leadTopic = ref('')
+export const chooseTopic = (topic: string) => {
+  leadTopic.value = topic
+}
 type FieldName = 'name' | 'company' | 'contact' | 'message' | 'consent'
 
 // Те же лимиты и проверка контакта продублированы на сервере в api/lead.ts
@@ -30,6 +37,11 @@ export function useLeadForm() {
 
   onMounted(() => {
     startedAt = Date.now()
+  })
+
+  watch(leadTopic, (topic) => {
+    const message = fields.message.trim()
+    if (topic && (!message || message.startsWith(TOPIC_PREFIX))) fields.message = TOPIC_PREFIX + topic
   })
 
   function validate(): boolean {

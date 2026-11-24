@@ -7,7 +7,7 @@ import { navLinks } from '@/config'
 <template>
   <header class="header">
     <div class="container header__inner">
-      <RouterLink to="/" class="header__logo" aria-label="Raw Motion Frame, на главную"><SiteLogo /></RouterLink>
+      <RouterLink to="/" class="header__logo" aria-label="Raw Motion Frame, на главную"><SiteLogo :size="56" /></RouterLink>
       <nav class="header__nav" aria-label="Основная навигация">
         <ul>
           <li v-for="link in navLinks" :key="link.hash">
@@ -26,8 +26,8 @@ import { navLinks } from '@/config'
   top: 0;
   z-index: 50;
   height: var(--header-h);
-  background: rgb(10 10 10 / 0.86);
-  backdrop-filter: blur(10px);
+  /* Сплошной фон в цвет фона PNG-логотипа, иначе над светлыми блоками виден его квадрат */
+  background: var(--color-bg);
   border-bottom: 1px solid var(--gray-1);
 }
 

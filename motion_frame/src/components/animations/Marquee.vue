@@ -74,9 +74,7 @@ const group = computed(() => {
   background: transparent;
   color: var(--color-muted);
   font: inherit;
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 13px;
   cursor: pointer;
 }
 

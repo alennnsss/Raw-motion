@@ -5,7 +5,7 @@ export const routes: RouteRecordRaw[] = [
   { path: '/privacy', name: 'privacy', component: () => import('@/pages/Privacy.vue') },
 ]
 
-const HEADER_OFFSET = 72
+const HEADER_OFFSET = 80
 
 export const scrollBehavior: RouterScrollBehavior = (to, from, saved) => {
   if (saved) return saved

@@ -44,8 +44,8 @@ useAnimation(
   <section id="process" ref="root" class="section process" aria-labelledby="process-title">
     <div class="container">
       <div class="section-head">
-        <p class="eyebrow">Как мы работаем</p>
-        <SplitHeading id="process-title" class="section-title" text="От заявки до готового ролика" accent="готового" />
+        <SplitHeading id="process-title" class="section-title" text="Как проходит заказ" />
+        <p class="section-intro">Пять шагов от заявки до готового файла.</p>
       </div>
 
       <div class="process__timeline" aria-hidden="true">
@@ -55,7 +55,10 @@ useAnimation(
       <div class="process__viewport">
         <ol class="process__track">
           <li v-for="(step, i) in processSteps" :key="step.title" class="process__step" data-reveal>
-            <span class="process__index">{{ String(i + 1).padStart(2, '0') }}</span>
+            <div class="process__meta">
+              <span class="process__icon"><component :is="step.icon" :size="22" :stroke-width="1.75" aria-hidden="true" /></span>
+              <span class="process__index">Шаг {{ i + 1 }}</span>
+            </div>
             <h3 class="process__name">{{ step.title }}</h3>
             <p class="process__text">{{ step.text }}</p>
           </li>
@@ -95,15 +98,21 @@ useAnimation(
   border-left: 2px solid var(--gray-2);
 }
 
-.process__index {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  color: var(--color-muted);
+.process__meta { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+
+.process__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--gray-2);
 }
+
+.process__index { font-size: 14px; font-weight: 500; color: var(--color-muted); }
 
 .process__name { font-size: 26px; }
 
-.process__text { color: var(--color-muted); max-width: 26em; }
+.process__text { font-size: 16px; color: var(--color-muted); max-width: 26em; }
 
 @media (min-width: 960px) {
   .process__track { grid-template-columns: repeat(5, 1fr); gap: 24px; }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, toRef } from 'vue'
+import { Play } from 'lucide-vue-next'
 import type { PortfolioItem } from '@/types'
 import { useInViewAutoplay } from '@/composables/useInViewAutoplay'
 
@@ -35,12 +36,13 @@ useInViewAutoplay(video, toRef(props, 'paused'))
         aria-hidden="true"
       ></video>
       <img v-else-if="item.poster" class="card__video" :src="item.poster" :width="item.width" :height="item.height" alt="" loading="lazy" />
-      <span class="card__play" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="currentColor" /></svg>
-      </span>
+      <span class="card__play" aria-hidden="true"><Play :size="20" fill="currentColor" /></span>
     </button>
     <div v-else class="card__media card__media--placeholder" :style="{ aspectRatio: `${item.width} / ${item.height}` }">
-      <span class="card__soon">Работа скоро появится</span>
+      <span class="card__placeholder frame">
+        <Play :size="28" :stroke-width="1.5" aria-hidden="true" />
+        <span class="card__soon">Скоро здесь будет ролик</span>
+      </span>
     </div>
     <p class="card__category">{{ item.category }}</p>
     <h3 class="card__title">{{ item.title }}</h3>
@@ -114,19 +116,28 @@ useInViewAutoplay(video, toRef(props, 'paused'))
 
 .card__media--placeholder {
   display: grid;
-  place-items: center;
   cursor: default;
-  border: 1px dashed var(--gray-2);
+  background: linear-gradient(180deg, var(--color-surface), var(--gray-1));
 }
 
 .card__media--placeholder::after { display: none; }
 
-.card__soon { font-size: 13px; color: var(--color-muted); }
+.card__placeholder {
+  --frame-color: var(--gray-3);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  margin: 12px;
+  padding: 16px;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.card__soon { font-size: 14px; }
 
 .card__category {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-size: 14px;
   color: var(--color-muted);
 }
 

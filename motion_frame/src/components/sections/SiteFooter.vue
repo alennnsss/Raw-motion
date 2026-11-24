@@ -14,7 +14,7 @@ onMounted(() => {
   <footer class="footer">
     <div class="container footer__inner">
       <div class="footer__brand">
-        <RouterLink to="/" aria-label="Raw Motion Frame, на главную" class="footer__logo"><SiteLogo /></RouterLink>
+        <RouterLink to="/" aria-label="Raw Motion Frame, на главную" class="footer__logo"><SiteLogo :size="112" /></RouterLink>
         <p class="footer__text">Студия видеомонтажа: Reels, TikTok, Shorts, YouTube и рекламные ролики.</p>
       </div>
 

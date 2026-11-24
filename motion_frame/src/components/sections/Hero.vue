@@ -47,10 +47,9 @@ useAnimation(root, (gsap) => {
         <span class="hero__corner hero__corner--bl" aria-hidden="true"></span>
         <span class="hero__corner hero__corner--br" aria-hidden="true"></span>
 
-        <p class="eyebrow">Студия видеомонтажа</p>
-        <SplitHeading id="hero-title" tag="h1" class="hero__title" text="Монтаж видео, который досматривают" accent="досматривают" />
+        <SplitHeading id="hero-title" tag="h1" class="hero__title" text="Монтаж видео для соцсетей и рекламы" accent="видео" />
         <p class="hero__lead">
-          Монтируем Reels, TikTok, Shorts, YouTube и рекламные ролики. Субтитры, графика и звук под ключ.
+          Reels, TikTok, Shorts, YouTube и рекламные ролики. Делаем субтитры, графику и звук, можно заказать всё вместе.
         </p>
         <div class="hero__actions">
           <AppButton href="#lead">Оставить заявку</AppButton>
@@ -137,9 +136,7 @@ useAnimation(root, (gsap) => {
 }
 
 .hero__count-label {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-size: 16px;
   color: var(--color-muted);
 }
 

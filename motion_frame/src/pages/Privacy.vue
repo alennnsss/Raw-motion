@@ -15,6 +15,8 @@ useSeoMeta({
   ogUrl: url,
   ogLocale: 'ru_RU',
   ogSiteName: SITE_NAME,
+  ogImage: { url: `${SITE_URL}/og-image.png`, width: 1080, height: 1080, alt: 'Логотип Raw Motion Frame' },
+  twitterImage: `${SITE_URL}/og-image.png`,
   twitterCard: 'summary',
   twitterTitle: title,
   twitterDescription: description,
@@ -27,7 +29,6 @@ useHead({ link: [{ rel: 'canonical', href: url }] })
 <template>
   <main id="main" class="section privacy">
     <div class="container privacy__inner">
-      <p class="eyebrow">Документ</p>
       <h1 class="privacy__title">Политика конфиденциальности</h1>
 
       <h2>Какие данные мы собираем</h2>

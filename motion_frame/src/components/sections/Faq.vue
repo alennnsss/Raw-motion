@@ -12,8 +12,8 @@ useReveal(root)
   <section id="faq" ref="root" class="section faq" aria-labelledby="faq-title">
     <div class="container faq__inner">
       <div class="section-head">
-        <p class="eyebrow">FAQ</p>
-        <SplitHeading id="faq-title" class="section-title" text="Частые вопросы" />
+        <SplitHeading id="faq-title" class="section-title" text="Вопросы и ответы" />
+        <p class="section-intro">Не нашли ответ? Спросите в заявке, ответим лично.</p>
       </div>
 
       <div class="faq__list">

@@ -64,6 +64,8 @@ useSeoMeta({
   ogUrl: url,
   ogLocale: 'ru_RU',
   ogSiteName: SITE_NAME,
+  ogImage: { url: `${SITE_URL}/og-image.png`, width: 1080, height: 1080, alt: 'Логотип Raw Motion Frame' },
+  twitterImage: `${SITE_URL}/og-image.png`,
   twitterCard: 'summary',
   twitterTitle: title,
   twitterDescription: description,
