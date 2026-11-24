@@ -70,9 +70,10 @@ const group = computed(() => {
   display: block;
   margin: 16px auto 0;
   padding: 6px 12px;
-  border: 1px solid var(--gray-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
   background: transparent;
-  color: var(--color-muted);
+  color: var(--muted);
   font: inherit;
   font-size: 13px;
   cursor: pointer;

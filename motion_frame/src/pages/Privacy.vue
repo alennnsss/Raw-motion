@@ -73,9 +73,9 @@ useHead({ link: [{ rel: 'canonical', href: url }] })
   font-size: 22px;
 }
 
-.privacy p { color: var(--color-muted); }
+.privacy p { color: var(--muted); font-size: 17px; }
 
-.privacy a { color: var(--color-text); }
+.privacy a { text-underline-offset: 3px; }
 
 .privacy__back { margin-top: 48px; }
 </style>

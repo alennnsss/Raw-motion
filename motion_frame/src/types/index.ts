@@ -4,8 +4,8 @@ export interface Service {
   title: string
   description: string
   icon: Component
-  /** Площадки и форматы, показываются чипами только у главной услуги */
-  tags?: string[]
+  /** Что входит: короткие пункты для сетки в панели услуги */
+  includes: string[]
 }
 
 export interface PortfolioItem {
@@ -33,7 +33,8 @@ export interface PriceItem {
 
 export interface Partner {
   name: string
-  url: string
+  /** Без url логотип показывается без ссылки */
+  url?: string
   /** Путь в public/partners. Пока файла нет, показываем текстовый вордмарк */
   logo?: string
 }

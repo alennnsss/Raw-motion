@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import SiteLogo from '@/components/ui/SiteLogo.vue'
 import { INSTAGRAM_URL, navLinks } from '@/config'
+
+const route = useRoute()
 
 // Год из пререндера мог устареть, поэтому обновляем в браузере
 const year = ref(new Date().getFullYear())
@@ -11,10 +14,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <footer class="footer">
+  <!-- На главной подвал продолжает тёмный блок формы; на других страницах сам скругляет верх -->
+  <footer class="footer dark" :class="{ 'footer--standalone': route.path !== '/' }">
     <div class="container footer__inner">
       <div class="footer__brand">
-        <RouterLink to="/" aria-label="Raw Motion Frame, на главную" class="footer__logo"><SiteLogo :size="112" /></RouterLink>
+        <RouterLink to="/" aria-label="Raw Motion Frame, на главную" class="footer__logo"><SiteLogo :height="64" full /></RouterLink>
         <p class="footer__text">Студия видеомонтажа: Reels, TikTok, Shorts, YouTube и рекламные ролики.</p>
       </div>
 
@@ -44,35 +48,43 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.footer {
-  padding-block: 56px 32px;
-  border-top: 1px solid var(--gray-1);
+.footer { padding-block: 24px 32px; }
+
+.footer--standalone {
+  margin-top: 40px;
+  padding-top: 64px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 .footer__inner {
   display: grid;
   gap: 32px;
+  padding-top: 48px;
+  border-top: 1px solid var(--line);
 }
 
-.footer__logo { text-decoration: none; }
+.footer__logo { display: inline-block; border-radius: 4px; text-decoration: none; }
 
-.footer__text { margin-top: 16px; max-width: 26em; color: var(--color-muted); font-size: 14px; }
+.footer__text { margin-top: 16px; max-width: 24em; color: var(--muted); }
 
 .footer__nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
-  font-size: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 12px 40px;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 
-.footer__nav a { text-decoration: none; }
-.footer__nav a:hover { text-decoration: underline; }
+.footer__nav a { text-decoration: none; transition: color 0.2s; }
+.footer__nav a:hover { color: var(--color-accent); }
 
 .footer__instagram {
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
   border: 1px solid var(--gray-2);
   transition: transform 0.25s var(--ease), color 0.2s, border-color 0.2s;
 }
@@ -90,13 +102,16 @@ onMounted(() => {
   justify-content: space-between;
   gap: 12px;
   padding-top: 24px;
-  border-top: 1px solid var(--gray-1);
-  font-size: 13px;
-  color: var(--color-muted);
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--muted);
 }
 
+.footer__bottom a { text-underline-offset: 3px; }
+
 @media (min-width: 900px) {
-  .footer__inner { grid-template-columns: 1.4fr 2fr auto; align-items: start; }
+  .footer__inner { grid-template-columns: 1.3fr 1.5fr auto; align-items: start; }
+  .footer__nav { grid-template-columns: repeat(3, max-content); }
   .footer__bottom { grid-column: 1 / -1; }
 }
 

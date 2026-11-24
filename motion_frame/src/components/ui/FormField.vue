@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+// Обёртка поля: label, подсказка и ошибка. Сам ввод (PrimeVue) приходит в слот
 const props = defineProps<{
   id: string
   label: string
@@ -19,7 +20,7 @@ const describedby = computed(
 </script>
 
 <template>
-  <div class="field" :class="{ 'field--invalid': error }">
+  <div class="field">
     <label class="field__label" :for="id">
       {{ label }}<span v-if="required" class="field__required" aria-hidden="true"> *</span>
     </label>
@@ -32,37 +33,11 @@ const describedby = computed(
 <style scoped>
 .field { display: grid; gap: 8px; }
 
-.field__label {
-  font-size: 15px;
-  font-weight: 500;
-}
+.field__label { font-size: 15px; font-weight: 500; }
 
 .field__required { color: var(--color-accent); }
 
-.field :slotted(input),
-.field :slotted(textarea) {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1px solid var(--gray-2);
-  border-radius: 0;
-  background: var(--color-bg);
-  color: var(--color-text);
-  font: inherit;
-  transition: border-color 0.2s;
-}
-
-.field :slotted(textarea) { min-height: 120px; resize: vertical; }
-
-.field :slotted(input:focus-visible),
-.field :slotted(textarea:focus-visible) {
-  outline: none;
-  border-color: var(--color-accent);
-}
-
-.field--invalid :slotted(input),
-.field--invalid :slotted(textarea) { border-color: var(--color-error); }
-
-.field__hint { font-size: 13px; color: var(--color-muted); }
+.field__hint { font-size: 13px; color: var(--muted); }
 
 .field__error {
   font-size: 13px;

@@ -13,14 +13,12 @@ useInViewAutoplay(video, toRef(props, 'paused'))
 
 <template>
   <article class="card">
-    <button
-      v-if="item.full"
-      type="button"
-      class="card__media"
-      :style="{ aspectRatio: `${item.width} / ${item.height}` }"
-      :aria-label="`Смотреть: ${item.title}`"
-      @click="emit('open', item)"
-    >
+    <header class="card__top">
+      <h3 class="card__title">{{ item.title }}</h3>
+      <span class="card__tag">{{ item.category }}</span>
+    </header>
+
+    <button v-if="item.preview" type="button" class="card__media" :aria-label="`Смотреть: ${item.title}`" @click="emit('open', item)">
       <video
         v-if="item.preview"
         ref="video"
@@ -32,34 +30,62 @@ useInViewAutoplay(video, toRef(props, 'paused'))
         muted
         playsinline
         loop
-        preload="none"
+        preload="metadata"
         aria-hidden="true"
       ></video>
       <img v-else-if="item.poster" class="card__video" :src="item.poster" :width="item.width" :height="item.height" alt="" loading="lazy" />
-      <span class="card__play" aria-hidden="true"><Play :size="20" fill="currentColor" /></span>
+      <span class="card__play" aria-hidden="true"><Play :size="18" fill="currentColor" /></span>
     </button>
-    <div v-else class="card__media card__media--placeholder" :style="{ aspectRatio: `${item.width} / ${item.height}` }">
+
+    <div v-else class="card__media card__media--placeholder">
       <span class="card__placeholder frame">
-        <Play :size="28" :stroke-width="1.5" aria-hidden="true" />
+        <Play :size="26" :stroke-width="1.5" aria-hidden="true" />
         <span class="card__soon">Скоро здесь будет ролик</span>
       </span>
     </div>
-    <p class="card__category">{{ item.category }}</p>
-    <h3 class="card__title">{{ item.title }}</h3>
   </article>
 </template>
 
 <style scoped>
-.card { display: grid; gap: 10px; }
+.card {
+  display: grid;
+  gap: 12px;
+  height: 100%;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: var(--color-card);
+}
+
+.card__top {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 4px 0;
+}
+
+.card__title { font-size: 17px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.25; }
+
+.card__tag {
+  flex: none;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--color-paper);
+  font-size: 13px;
+  font-weight: 500;
+}
 
 .card__media {
   position: relative;
   display: block;
   width: 100%;
+  aspect-ratio: 4 / 5;
   padding: 0;
   border: 0;
+  border-radius: var(--radius-sm);
   overflow: hidden;
-  background: var(--color-surface);
+  background: var(--color-bg);
   color: var(--color-text);
   cursor: pointer;
 }
@@ -89,27 +115,20 @@ useInViewAutoplay(video, toRef(props, 'paused'))
 }
 
 .card__media:hover::after,
-.card__media:focus-visible::after {
-  opacity: 1;
-  transform: scale(1);
-}
+.card__media:focus-visible::after { opacity: 1; transform: scale(1); }
 
 /* Чужой ролик показываем целиком, без кадрирования */
-.card__video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background: #000;
-}
+.card__video { width: 100%; height: 100%; object-fit: contain; }
 
 .card__play {
   position: absolute;
-  left: 16px;
-  bottom: 16px;
+  left: 12px;
+  bottom: 12px;
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
+  border-radius: 999px;
   background: var(--color-accent);
   color: var(--color-ink);
 }
@@ -117,7 +136,7 @@ useInViewAutoplay(video, toRef(props, 'paused'))
 .card__media--placeholder {
   display: grid;
   cursor: default;
-  background: linear-gradient(180deg, var(--color-surface), var(--gray-1));
+  background: linear-gradient(170deg, #1d1d1b, var(--color-bg));
 }
 
 .card__media--placeholder::after { display: none; }
@@ -135,13 +154,6 @@ useInViewAutoplay(video, toRef(props, 'paused'))
 }
 
 .card__soon { font-size: 14px; }
-
-.card__category {
-  font-size: 14px;
-  color: var(--color-muted);
-}
-
-.card__title { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
 
 @media (prefers-reduced-motion: reduce) {
   .card__media::after { transition: none; transform: none; }

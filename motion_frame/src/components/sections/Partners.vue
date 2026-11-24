@@ -10,58 +10,59 @@ import { partners } from '@/data/partners'
     </div>
     <Marquee :items="partners" label="логотипы партнёров" :duration="28">
       <template #default="{ item, hidden }">
-        <a
+        <component
+          :is="item.url ? 'a' : 'span'"
           class="partners__link"
           :href="item.url"
-          target="_blank"
-          rel="noopener noreferrer"
-          :tabindex="hidden ? -1 : undefined"
+          :target="item.url ? '_blank' : undefined"
+          :rel="item.url ? 'noopener noreferrer' : undefined"
+          :tabindex="item.url && hidden ? -1 : undefined"
         >
-          <img v-if="item.logo" :src="item.logo" :alt="item.name" height="32" class="partners__logo" />
-          <span v-else class="partners__wordmark">{{ item.name }}</span>
-        </a>
+          <img v-if="item.logo" :src="item.logo" alt="" width="40" height="40" class="partners__logo" />
+          <span class="partners__wordmark">{{ item.name }}</span>
+        </component>
       </template>
     </Marquee>
   </section>
 </template>
 
 <style scoped>
-.partners {
-  padding-block: 40px;
-  border-block: 1px solid var(--gray-1);
-}
+.partners { padding-block: 56px 40px; }
 
 .partners__title {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0;
-  text-align: center;
-  color: var(--color-muted);
+  color: var(--muted);
 }
 
 .partners__link {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: inherit;
   padding: 8px 0;
+  border-radius: 4px;
   text-decoration: none;
-  opacity: 0.7;
+  opacity: 0.75;
   transition: opacity 0.2s;
 }
 
 .partners__link:hover,
 .partners__link:focus-visible { opacity: 1; }
 
-/* Одна высота и монохром для всех логотипов */
+/* Иконки партнёров в одной логике: одинаковый размер и скругление, как у иконок приложений */
 .partners__logo {
-  height: 32px;
-  width: auto;
-  filter: grayscale(1) brightness(1.6);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
 }
 
 .partners__wordmark {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.01em;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
   white-space: nowrap;
 }
 </style>

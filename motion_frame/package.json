@@ -12,9 +12,11 @@
     "test": "node scripts/test-lead.ts"
   },
   "dependencies": {
+    "@primeuix/themes": "^2.0.3",
     "@unhead/vue": "^2.1.19",
     "gsap": "^3.15.1",
     "lucide-vue-next": "^1.0.0",
+    "primevue": "^4.5.5",
     "vite-ssg": "^28.3.0",
     "vue": "^3.5.44",
     "vue-router": "^4.6.5"

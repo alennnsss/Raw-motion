@@ -18,8 +18,8 @@ useReveal(root)
 <template>
   <section id="portfolio" ref="root" class="section portfolio" aria-labelledby="portfolio-title">
     <div class="container">
-      <div class="section-head portfolio__head">
-        <div>
+      <div class="portfolio__head">
+        <div class="section-head">
           <SplitHeading id="portfolio-title" class="section-title" text="Наши работы" />
           <p class="section-intro">Мы смонтировали больше 100 роликов. Здесь собраны некоторые из них.</p>
         </div>
@@ -45,27 +45,28 @@ useReveal(root)
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 24px;
-  max-width: none;
+  gap: 0 24px;
 }
 
 .portfolio__pause {
+  margin-bottom: 48px;
   padding: 10px 16px;
-  border: 1px solid var(--gray-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
   background: transparent;
-  color: var(--color-text);
+  color: inherit;
   font: inherit;
-  font-size: 13px;
+  font-size: 14px;
   cursor: pointer;
 }
 
 .portfolio__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
 }
 
 @media (min-width: 1024px) {
-  .portfolio__grid { grid-template-columns: repeat(4, 1fr); gap: 32px 24px; }
+  .portfolio__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 }
 </style>

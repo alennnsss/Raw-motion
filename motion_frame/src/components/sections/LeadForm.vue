@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { nextTick, ref, watch } from 'vue'
 import { gsap } from 'gsap'
+import { Check } from 'lucide-vue-next'
+import Checkbox from 'primevue/checkbox'
+import InputText from 'primevue/inputtext'
+import Textarea from 'primevue/textarea'
 import AppButton from '@/components/ui/AppButton.vue'
 import FormField from '@/components/ui/FormField.vue'
 import SplitHeading from '@/components/animations/SplitHeading.vue'
+import { INSTAGRAM_URL } from '@/config'
 import { LIMITS, useLeadForm } from '@/composables/useLeadForm'
 import { prefersReducedMotion } from '@/composables/useAnimation'
 import { useReveal } from '@/composables/useReveal'
@@ -33,38 +38,42 @@ watch(status, async (value) => {
 </script>
 
 <template>
-  <section id="lead" ref="root" class="section lead" aria-labelledby="lead-title">
+  <section id="lead" ref="root" class="section lead dark" data-rise aria-labelledby="lead-title">
     <div class="container lead__inner">
       <div class="lead__intro">
-        <SplitHeading id="lead-title" class="section-title" text="Оставить заявку" />
+        <SplitHeading id="lead-title" class="lead__title" text="Оставить заявку" />
         <p class="section-intro">Расскажите, что нужно смонтировать. Мы ответим, уточним детали и назовём точную стоимость.</p>
+        <p class="lead__alt">
+          Удобнее в директ? Пишите в
+          <a :href="INSTAGRAM_URL" target="_blank" rel="noopener noreferrer">Instagram</a>.
+        </p>
       </div>
 
-      <div class="lead__card frame" data-reveal>
+      <div class="lead__card" data-reveal>
         <div v-if="status === 'success'" ref="success" class="lead__success" tabindex="-1" role="status">
-          <span class="lead__check" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="28" height="28"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.5" /></svg>
-          </span>
+          <span class="lead__check" aria-hidden="true"><Check :size="28" :stroke-width="2.5" /></span>
           <p class="lead__success-title">Заявка отправлена</p>
-          <p class="lead__text">Скоро свяжемся с вами.</p>
-          <AppButton variant="ghost" @click="status = 'idle'">Отправить ещё одну</AppButton>
+          <p class="lead__success-text">Скоро свяжемся с вами.</p>
+          <AppButton variant="dark" @click="status = 'idle'">Отправить ещё одну</AppButton>
         </div>
 
         <form v-else ref="form" class="lead__form" novalidate @submit.prevent="onSubmit">
-          <FormField id="lead-name" v-slot="{ id, describedby, invalid }" label="Имя" :error="errors.name" required>
-            <input :id="id" v-model="fields.name" name="name" type="text" autocomplete="name" :maxlength="LIMITS.name" required :aria-invalid="invalid" :aria-describedby="describedby" />
-          </FormField>
+          <div class="lead__row">
+            <FormField id="lead-name" v-slot="{ id, describedby, invalid }" label="Имя" :error="errors.name" required>
+              <InputText :id="id" v-model="fields.name" name="name" autocomplete="name" :maxlength="LIMITS.name" required fluid :invalid="invalid" :aria-invalid="invalid || undefined" :aria-describedby="describedby" />
+            </FormField>
 
-          <FormField id="lead-company" v-slot="{ id, describedby, invalid }" label="Компания" hint="Название компании или «частное лицо»" :error="errors.company" required>
-            <input :id="id" v-model="fields.company" name="company" type="text" autocomplete="organization" :maxlength="LIMITS.company" required :aria-invalid="invalid" :aria-describedby="describedby" />
-          </FormField>
+            <FormField id="lead-company" v-slot="{ id, describedby, invalid }" label="Компания" :error="errors.company" required>
+              <InputText :id="id" v-model="fields.company" name="company" autocomplete="organization" :maxlength="LIMITS.company" required fluid :invalid="invalid" :aria-invalid="invalid || undefined" :aria-describedby="describedby" />
+            </FormField>
+          </div>
 
           <FormField id="lead-contact" v-slot="{ id, describedby, invalid }" label="Контакты" hint="Телефон, Telegram или Instagram: +7 777 123 45 67, @username" :error="errors.contact" required>
-            <input :id="id" v-model="fields.contact" name="contact" type="text" autocomplete="tel" :maxlength="LIMITS.contact" required :aria-invalid="invalid" :aria-describedby="describedby" />
+            <InputText :id="id" v-model="fields.contact" name="contact" autocomplete="tel" :maxlength="LIMITS.contact" required fluid :invalid="invalid" :aria-invalid="invalid || undefined" :aria-describedby="describedby" />
           </FormField>
 
           <FormField id="lead-message" v-slot="{ id, describedby, invalid }" label="Описание задачи" :error="errors.message">
-            <textarea :id="id" v-model="fields.message" name="message" :maxlength="LIMITS.message" :aria-invalid="invalid" :aria-describedby="describedby"></textarea>
+            <Textarea :id="id" v-model="fields.message" name="message" :maxlength="LIMITS.message" rows="4" auto-resize fluid :invalid="invalid" :aria-invalid="invalid || undefined" :aria-describedby="describedby" />
           </FormField>
 
           <!-- Honeypot: скрыт от людей, боты заполняют -->
@@ -74,14 +83,14 @@ watch(status, async (value) => {
           </div>
 
           <div class="lead__consent">
-            <input
-              id="lead-consent"
+            <Checkbox
               v-model="fields.consent"
-              type="checkbox"
+              input-id="lead-consent"
               name="consent"
+              binary
               required
-              :aria-invalid="!!errors.consent"
-              :aria-describedby="errors.consent ? 'lead-consent-error' : undefined"
+              :invalid="!!errors.consent"
+              :pt="{ input: { 'aria-describedby': errors.consent ? 'lead-consent-error' : undefined } }"
             />
             <label for="lead-consent">
               Согласен на обработку персональных данных согласно
@@ -90,7 +99,7 @@ watch(status, async (value) => {
             <p v-if="errors.consent" id="lead-consent-error" class="lead__field-error">{{ errors.consent }}</p>
           </div>
 
-          <AppButton type="submit" :disabled="status === 'loading'" class="lead__submit">
+          <AppButton type="submit" arrow :disabled="status === 'loading'" class="lead__submit">
             {{ status === 'loading' ? 'Отправляем…' : 'Отправить заявку' }}
           </AppButton>
 
@@ -104,13 +113,24 @@ watch(status, async (value) => {
 </template>
 
 <style scoped>
+.lead { border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+
 .lead__inner { display: grid; gap: 40px; }
 
-.lead__text { margin-top: 16px; color: var(--color-muted); max-width: 30em; }
+.lead__title { font-size: clamp(44px, 9vw, 104px); line-height: 1; }
 
-.lead__card { padding: 28px 20px; }
+.lead__alt { margin-top: 24px; color: var(--muted); }
+.lead__alt a { color: var(--color-text); text-underline-offset: 4px; }
+
+.lead__card {
+  padding: 24px 20px;
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
 
 .lead__form { display: grid; gap: 20px; }
+
+.lead__row { display: grid; gap: 20px; }
 
 .lead__hp {
   position: absolute;
@@ -126,17 +146,10 @@ watch(status, async (value) => {
   gap: 8px 12px;
   align-items: start;
   font-size: 14px;
-  color: var(--color-muted);
+  color: var(--muted);
 }
 
-.lead__consent input {
-  width: 20px;
-  height: 20px;
-  margin: 1px 0 0;
-  accent-color: var(--color-accent);
-}
-
-.lead__consent a { color: var(--color-text); }
+.lead__consent a { color: var(--color-text); text-underline-offset: 3px; }
 
 .lead__field-error { grid-column: 2; font-size: 13px; color: var(--color-error); }
 
@@ -144,12 +157,7 @@ watch(status, async (value) => {
 
 .lead__error { color: var(--color-error); font-size: 14px; }
 
-.lead__success {
-  display: grid;
-  justify-items: start;
-  gap: 8px;
-  outline: none;
-}
+.lead__success { display: grid; justify-items: start; gap: 8px; outline: none; }
 
 .lead__check {
   display: grid;
@@ -157,16 +165,21 @@ watch(status, async (value) => {
   width: 56px;
   height: 56px;
   margin-bottom: 8px;
+  border-radius: 999px;
   background: var(--color-accent);
   color: var(--color-ink);
 }
 
-.lead__success-title { font-size: 28px; font-weight: 800; }
+.lead__success-title { font-size: 30px; font-weight: 600; letter-spacing: -0.03em; }
 
-.lead__success .btn { margin-top: 16px; }
+.lead__success-text { margin-bottom: 16px; color: var(--muted); }
+
+@media (min-width: 640px) {
+  .lead__row { grid-template-columns: 1fr 1fr; }
+}
 
 @media (min-width: 960px) {
-  .lead__inner { grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: start; }
-  .lead__card { padding: 48px; }
+  .lead__inner { grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .lead__card { padding: 40px; }
 }
 </style>
