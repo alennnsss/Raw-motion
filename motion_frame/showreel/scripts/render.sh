@@ -15,6 +15,15 @@ ffmpeg -v error -y -i public/music-raw.wav -af "volume=${gain}dB,alimiter=limit=
 echo "Музыка: было ${lufs} LUFS, усиление ${gain} dB"
 
 mkdir -p "$OUT" out
+
+# `npm run render -- reels`: только версия 9:16 для публикации. Качество выше, Instagram всё равно пережмёт
+if [ "${1:-}" = reels ]; then
+  npx remotion render src/index.ts reels out/raw-motion-frame-reels.mp4 --codec=h264 --crf=18 --audio-bitrate=320k
+  node scripts/check-beats.mjs out/raw-motion-frame-reels.mp4
+  ls -la out/raw-motion-frame-reels.mp4
+  exit 0
+fi
+
 for id in desktop mobile; do
   npx remotion render src/index.ts "$id" "$OUT/showreel-$id.mp4" --codec=h264 --crf=26 --audio-bitrate=128k
   npx remotion still src/index.ts "$id" "out/poster-$id.png" --frame=$POSTER_FRAME

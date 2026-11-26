@@ -4,13 +4,13 @@ import { Audio, Video } from '@remotion/media'
 import { loadFont } from '@remotion/google-fonts/Inter'
 import { BAR, BARS, BEAT, FPS, onBeat } from './grid'
 
-const { fontFamily } = loadFont('normal', { weights: ['500', '600'], subsets: ['latin', 'cyrillic'] })
+export const { fontFamily } = loadFont('normal', { weights: ['500', '600'], subsets: ['latin', 'cyrillic'] })
 
 type Format = 'desktop' | 'mobile'
 type SceneProps = { f: Format }
 
 // Цвета из брендбука. Лайм только у плейхеда: одно акцентное место на кадр
-const C = {
+export const C = {
   bg: '#0A0A0A',
   light: '#F2F0EA',
   accent: '#C6FF00',
@@ -21,7 +21,7 @@ const C = {
   inkMuted: '#56554F',
 }
 
-const WORKS = {
+export const WORKS = {
   ad: 'montazh_ad_ru_1080x1920.mp4',
   findy: 'findy-job-ad.mp4',
   siteless: 'brag-v2-vertical.mp4',
@@ -293,13 +293,53 @@ const End = ({ f }: SceneProps) => {
 const SCENES = [Intro, Ads, Reels, Rhythm, Subtitles, Cuts, Timeline, End]
 if (SCENES.length !== BARS) throw new Error(`Сцен ${SCENES.length}, а тактов в beat.json ${BARS}`)
 
-export const Showreel = ({ format }: { format: Format }) => (
-  <AbsoluteFill style={{ background: C.bg, fontFamily }}>
+const Scenes = ({ f }: SceneProps) => (
+  <>
     {SCENES.map((Scene, i) => (
       <Sequence key={i} from={i * BAR} durationInFrames={BAR} premountFor={BEAT}>
-        <Scene f={format} />
+        <Scene f={f} />
       </Sequence>
     ))}
+  </>
+)
+
+// Reels 9:16: мобильная раскладка 4:5, увеличенная в 1.25 раза (864×1080 → 1080×1350).
+// Сверху отступ под интерфейс Instagram, подписи остаются выше нижней зоны с подписью и кнопками (~1500 px)
+const REELS_TOP = 220
+const REELS_SCALE = 1.25
+
+// Фон на весь кадр 9:16: в светлом такте («Субтитры») светлый, иначе тёмный
+const ReelsBackground = () => {
+  const light = Math.floor(useCurrentFrame() / BAR) === SCENES.indexOf(Subtitles)
+  return <AbsoluteFill style={{ background: light ? C.light : C.bg }} />
+}
+
+// Ник Instagram под логотипом на финальной заставке: зритель Reels сразу видит, куда писать
+const Handle = () => {
+  const frame = useCurrentFrame()
+  const out = interpolate(frame, [BAR - 12, BAR - 1], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })
+  return (
+    <AbsoluteFill style={{ alignItems: 'center', top: 1140, opacity: out }}>
+      <Word enter={onBeat(2)} size={48} color={C.light}>@raw_motionframe</Word>
+    </AbsoluteFill>
+  )
+}
+
+export const Showreel = ({ format }: { format: Format | 'reels' }) => (
+  <AbsoluteFill style={{ background: C.bg, fontFamily }}>
+    {format === 'reels' ? (
+      <>
+        <ReelsBackground />
+        <div style={{ position: 'absolute', left: 0, top: REELS_TOP, width: 864, height: 1080, transform: `scale(${REELS_SCALE})`, transformOrigin: 'top left' }}>
+          <Scenes f="mobile" />
+        </div>
+        <Sequence from={(BARS - 1) * BAR} durationInFrames={BAR}>
+          <Handle />
+        </Sequence>
+      </>
+    ) : (
+      <Scenes f={format} />
+    )}
     <Audio src={staticFile('music.wav')} />
   </AbsoluteFill>
 )

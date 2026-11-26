@@ -6,7 +6,8 @@
     "prepare-assets": "bash scripts/prepare-assets.sh",
     "music": "node scripts/music.mjs",
     "studio": "npm run prepare-assets && remotion studio",
-    "render": "bash scripts/render.sh"
+    "render": "bash scripts/render.sh",
+    "cover": "npm run prepare-assets && remotion still src/index.ts cover out/raw-motion-frame-cover.jpg --frame=0 --image-format=jpeg --jpeg-quality=92"
   },
   "dependencies": {
     "@remotion/cli": "4.0.547",

@@ -5,7 +5,7 @@ export const portfolio: PortfolioItem[] = [
     id: 'reels-01',
     preview: '/videos/previews/findy-job-ad.mp4',
     full: '/videos/findy-job-ad.mp4',
-    poster: '/photos/findy.jpg',
+    poster: '/videos/previews/findy-job-ad.jpg',
     title: 'Reels для эксперта',
     category: 'Reels',
     width: 1080,
