@@ -1,14 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Play } from 'lucide-vue-next'
+import { Pause, Play, Volume2, VolumeX } from 'lucide-vue-next'
 import AppButton from '@/components/ui/AppButton.vue'
 import SplitHeading from '@/components/animations/SplitHeading.vue'
 import Marquee from '@/components/animations/Marquee.vue'
 import { stats } from '@/data/stats'
 import { services } from '@/data/services'
 import { useAnimation } from '@/composables/useAnimation'
+import { useInViewAutoplay } from '@/composables/useInViewAutoplay'
 
 const root = ref<HTMLElement | null>(null)
+
+// Две версии шоурила: CSS показывает одну, скрытая не попадает в зону видимости и не играет
+const reelMobile = ref<HTMLVideoElement | null>(null)
+const reelDesktop = ref<HTMLVideoElement | null>(null)
+const reelPaused = ref(false)
+// Автозапуск браузеры разрешают только без звука: музыку посетитель включает сам
+const reelSound = ref(false)
+useInViewAutoplay(reelMobile, reelPaused)
+useInViewAutoplay(reelDesktop, reelPaused)
 const counted = stats.find((stat) => stat.countTo)
 // В пререндере сразу итоговое число: его видят поисковик и пользователь без JS
 const count = ref(counted?.countTo ?? 0)
@@ -63,17 +73,63 @@ useAnimation(root, (gsap) => {
       </div>
 
       <div class="hero__grid">
-        <a href="#portfolio" class="hero__reel">
+        <div class="hero__reel">
+          <video
+            ref="reelMobile"
+            class="hero__video hero__video--mobile"
+            src="/videos/showreel/showreel-mobile.mp4"
+            poster="/videos/showreel/showreel-mobile.jpg"
+            width="864"
+            height="1080"
+            :muted="!reelSound"
+            playsinline
+            loop
+            preload="none"
+            aria-hidden="true"
+          ></video>
+          <video
+            ref="reelDesktop"
+            class="hero__video hero__video--desktop"
+            src="/videos/showreel/showreel-desktop.mp4"
+            poster="/videos/showreel/showreel-desktop.jpg"
+            width="1440"
+            height="1080"
+            :muted="!reelSound"
+            playsinline
+            loop
+            preload="none"
+            aria-hidden="true"
+          ></video>
           <span class="hero__corner hero__corner--tl" aria-hidden="true"></span>
           <span class="hero__corner hero__corner--tr" aria-hidden="true"></span>
           <span class="hero__corner hero__corner--bl" aria-hidden="true"></span>
           <span class="hero__corner hero__corner--br" aria-hidden="true"></span>
           <span class="hero__bars" aria-hidden="true"><span></span><span></span></span>
-          <span class="hero__reel-label">
+          <a href="#portfolio" class="hero__reel-label">
             <Play :size="16" fill="currentColor" aria-hidden="true" />
             Шоурил и работы
-          </span>
-        </a>
+          </a>
+          <button
+            type="button"
+            class="hero__reel-pause"
+            :aria-pressed="reelPaused"
+            :aria-label="reelPaused ? 'Запустить шоурил' : 'Остановить шоурил'"
+            @click="reelPaused = !reelPaused"
+          >
+            <Play v-if="reelPaused" :size="16" fill="currentColor" aria-hidden="true" />
+            <Pause v-else :size="16" fill="currentColor" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            class="hero__reel-pause hero__reel-sound"
+            :aria-pressed="reelSound"
+            :aria-label="reelSound ? 'Выключить звук шоурила' : 'Включить звук шоурила'"
+            @click="reelSound = !reelSound"
+          >
+            <Volume2 v-if="reelSound" :size="18" aria-hidden="true" />
+            <VolumeX v-else :size="18" aria-hidden="true" />
+          </button>
+        </div>
 
         <div class="hero__aside">
           <p class="hero__lead">
@@ -125,19 +181,42 @@ useAnimation(root, (gsap) => {
   margin-top: 48px;
 }
 
+/* Пропорция блока = пропорция видео: шоурил виден целиком, без обрезки */
 .hero__reel {
   position: relative;
-  display: grid;
-  place-items: center;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
   border-radius: var(--radius);
   overflow: hidden;
-  background:
-    radial-gradient(120% 90% at 20% 10%, #2a2a27 0%, transparent 60%),
-    linear-gradient(160deg, #1d1d1b 0%, #0f0f0e 100%);
+  background: var(--color-bg);
   color: var(--color-text);
-  text-decoration: none;
 }
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__video--desktop { display: none; }
+
+/* Подпись и пауза стоят внутри нижних уголков видоискателя, не поверх линий */
+.hero__reel-pause {
+  position: absolute;
+  right: 32px;
+  bottom: 32px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--gray-2);
+  border-radius: 999px;
+  background: rgb(10 10 10 / 0.7);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.hero__reel-sound { top: 32px; bottom: auto; }
 
 .hero__corner {
   position: absolute;
@@ -155,26 +234,40 @@ useAnimation(root, (gsap) => {
 .hero__bars {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 22px;
   display: flex;
   gap: 8px;
-  height: 12px;
-  transform: translate(-50%, -48px);
+  height: 10px;
+  transform: translateX(-50%);
 }
 
 .hero__bars span:nth-child(1) { width: 36px; background: var(--gray-2); }
 .hero__bars span:nth-child(2) { width: 120px; background: var(--color-accent); transform-origin: left; }
 
 .hero__reel-label {
+  position: absolute;
+  left: 32px;
+  bottom: 32px;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding-bottom: 6px;
-  border-bottom: 2px solid var(--color-light);
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 15px;
+  border-radius: 999px;
+  background: rgb(10 10 10 / 0.7);
+  color: inherit;
   font-weight: 600;
+  text-decoration: none;
+  box-shadow: inset 0 -2px 0 var(--color-light);
 }
 
-.hero__reel:hover .hero__reel-label { border-color: var(--color-accent); }
+.hero__reel-label:hover,
+.hero__reel-label:focus-visible { box-shadow: inset 0 -2px 0 var(--color-accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__reel-pause { display: none; }
+}
 
 .hero__lead {
   font-size: clamp(20px, 2.2vw, 28px);
@@ -195,7 +288,6 @@ useAnimation(root, (gsap) => {
   gap: 8px;
   align-content: start;
   flex: 1 1 140px;
-  max-width: 220px;
 }
 
 .hero__value {
@@ -204,6 +296,8 @@ useAnimation(root, (gsap) => {
   letter-spacing: -0.03em;
   line-height: 1.05;
   font-variant-numeric: tabular-nums;
+  /* «от 3 000 ₸» не должно разваливаться на две строки */
+  white-space: nowrap;
 }
 
 .hero__label { font-size: 15px; line-height: 1.35; color: var(--muted); }
@@ -230,6 +324,8 @@ useAnimation(root, (gsap) => {
 
 @media (min-width: 1024px) {
   .hero__grid { grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 72px; }
-  .hero__reel { aspect-ratio: auto; min-height: 520px; }
+  .hero__reel { aspect-ratio: 4 / 3; }
+  .hero__video--mobile { display: none; }
+  .hero__video--desktop { display: block; }
 }
 </style>

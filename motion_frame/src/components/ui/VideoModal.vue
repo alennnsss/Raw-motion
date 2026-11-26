@@ -26,7 +26,7 @@ watch(
       </button>
       <video
         class="modal__video"
-        :src="item.full"
+        :src="item.full ?? item.preview"
         :poster="item.poster"
         :width="item.width"
         :height="item.height"

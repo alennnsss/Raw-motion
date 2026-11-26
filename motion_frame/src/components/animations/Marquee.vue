@@ -44,7 +44,7 @@ const group = computed(() => {
 
 .marquee__viewport {
   overflow: hidden;
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: var(--marquee-mask, linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent));
 }
 
 .marquee__track {
@@ -56,8 +56,8 @@ const group = computed(() => {
 .marquee__group {
   display: flex;
   align-items: center;
-  gap: 48px;
-  padding-right: 48px;
+  gap: var(--marquee-gap, 48px);
+  padding-right: var(--marquee-gap, 48px);
 }
 
 .marquee__item { flex: none; }

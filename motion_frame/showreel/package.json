@@ -1,0 +1,23 @@
+{
+  "name": "raw-motion-frame-showreel",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare-assets": "bash scripts/prepare-assets.sh",
+    "music": "node scripts/music.mjs",
+    "studio": "npm run prepare-assets && remotion studio",
+    "render": "bash scripts/render.sh"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.547",
+    "@remotion/google-fonts": "4.0.547",
+    "@remotion/media": "4.0.547",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "remotion": "4.0.547"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.13",
+    "typescript": "5.9.3"
+  }
+}

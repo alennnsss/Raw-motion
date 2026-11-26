@@ -49,6 +49,8 @@ useInViewAutoplay(video, toRef(props, 'paused'))
 <style scoped>
 .card {
   display: grid;
+  /* Шапка забирает лишнюю высоту: видео во всех карточках ряда на одной линии */
+  grid-template-rows: 1fr auto;
   gap: 12px;
   height: 100%;
   padding: 12px;
@@ -80,7 +82,7 @@ useInViewAutoplay(video, toRef(props, 'paused'))
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 9 / 16;
   padding: 0;
   border: 0;
   border-radius: var(--radius-sm);

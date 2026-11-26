@@ -1,39 +1,48 @@
-
 import type { PortfolioItem } from '@/types'
 
 export const portfolio: PortfolioItem[] = [
   {
     id: 'reels-01',
-    preview: '/videos/findy-job-ad.mp4',
+    preview: '/videos/previews/findy-job-ad.mp4',
+    full: '/videos/findy-job-ad.mp4',
+    poster: '/photos/findy.jpg',
     title: 'Reels для эксперта',
     category: 'Reels',
     width: 1080,
     height: 1920,
-    poster: '/photos/findy.png'
+    uploadDate: '2026-11-24',
   },
   {
     id: 'ad-01',
-    preview: '/videos/montazh_ad_ru_1080x1920.mp4',
+    preview: '/videos/previews/montazh_ad_ru_1080x1920.mp4',
+    full: '/videos/montazh_ad_ru_1080x1920.mp4',
+    poster: '/videos/previews/montazh_ad_ru_1080x1920.jpg',
     title: 'Рекламный ролик студии',
     category: 'Реклама',
     width: 1080,
     height: 1920,
-    
+    uploadDate: '2026-11-24',
   },
   {
     id: 'subtitles-01',
-    preview: '/videos/brag-v2-vertical.mp4',
+    preview: '/videos/previews/brag-v2-vertical.mp4',
+    full: '/videos/brag-v2-vertical.mp4',
+    poster: '/photos/siteless.jpg',
     title: 'Ролик с субтитрами',
     category: 'Субтитры',
     width: 1080,
     height: 1920,
-    poster: '/photos/siteless.png'
+    uploadDate: '2026-11-24',
   },
   {
-    id: 'reels-02',
-    title: 'Reels для бренда',
-    category: 'Reels',
+    id: 'ad-02',
+    preview: '/videos/previews/morent-reel-final.mp4',
+    full: '/videos/morent-reel-final.mp4',
+    poster: '/videos/previews/morent-reel-final.jpg',
+    title: 'Ролик для проката авто',
+    category: 'Реклама',
     width: 1080,
     height: 1920,
+    uploadDate: '2026-11-26',
   },
 ]

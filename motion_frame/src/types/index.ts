@@ -37,6 +37,10 @@ export interface Partner {
   url?: string
   /** Путь в public/partners. Пока файла нет, показываем текстовый вордмарк */
   logo?: string
+  /** Чем занимается компания, 1–2 предложения */
+  description?: string
+  /** Сфера: плашка в углу карточки */
+  tag?: string
 }
 
 export interface FaqItem {
