@@ -8,7 +8,5 @@ export interface Stat {
 
 export const stats: Stat[] = [
   { value: '100+', label: 'смонтированных роликов', countTo: 100 },
-  { value: 'от 3 000 ₸', label: 'стоимость монтажа' },
-  { value: '4', label: 'площадки: Reels, TikTok, Shorts, YouTube' },
-  { value: '5', label: 'шагов от заявки до готового ролика' },
+  { value: 'от 3 000 ₸', label: 'стоимость работ' },
 ]

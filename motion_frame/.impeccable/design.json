@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-28T07:37:12.679408+00:00",
+  "title": "Design System: Raw Motion Frame",
+  "extensions": {
+    "colorMeta": {
+      "primary-lime": {
+        "role": "primary",
+        "displayName": "Лайм-плейхед",
+        "canonical": "#C6FF00"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Чернила",
+        "canonical": "#0A0A0A"
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Бумага",
+        "canonical": "#F2F0EA"
+      },
+      "ghost-gray": {
+        "role": "neutral",
+        "displayName": "Призрачная полоса",
+        "canonical": "#504F4D"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Только h1 в Hero."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Заголовки секций и формы."
+      }
+    },
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Переходы состояний кнопок, шапки, карточек."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Главное действие: заявка.",
+      "html": "<button class=\"ds-btn-primary\">Оставить заявку</button>",
+      "css": ".ds-btn-primary{background:#C6FF00;color:#0A0A0A;min-height:52px;padding:14px 24px;border:0;border-radius:10px;font:600 15px Inter,system-ui,sans-serif;cursor:pointer;transition:transform .25s cubic-bezier(.22,1,.36,1)}.ds-btn-primary:active{transform:scale(.97)}.ds-btn-primary:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}"
+    },
+    {
+      "name": "Dark Button",
+      "kind": "button",
+      "refersTo": "button-dark",
+      "description": "Кнопки на светлых и лаймовой карточках.",
+      "html": "<button class=\"ds-btn-dark\">Заказать</button>",
+      "css": ".ds-btn-dark{background:#0A0A0A;color:#F2F0EA;min-height:52px;padding:14px 24px;border:0;border-radius:10px;font:600 15px Inter,system-ui,sans-serif;cursor:pointer}.ds-btn-dark:hover{background:#222220}.ds-btn-dark:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}"
+    },
+    {
+      "name": "Featured Price Card",
+      "kind": "card",
+      "refersTo": "price-card-featured",
+      "description": "Единственная лаймовая карточка цен.",
+      "html": "<div class=\"ds-price\"><p class=\"ds-price-name\">Пакет 10 роликов</p><p class=\"ds-price-value\">от 45 000 ₸</p></div>",
+      "css": ".ds-price{background:#C6FF00;color:#0A0A0A;border-radius:16px;padding:32px}.ds-price-name{font:600 24px/1.15 Inter,system-ui,sans-serif;margin:0 0 40px}.ds-price-value{font:700 36px/1 Unbounded,Inter,sans-serif;letter-spacing:-.03em;white-space:nowrap;margin:0}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Visuals that move",
+    "overview": "Монтажная студия, которая показывает работу, а не рассказывает о ней. Крупные блоки чёрного и бумажного цвета чередуются и наезжают друг на друга скруглёнными краями, как клипы на таймлайне. Широкий гротеск в заголовках даёт напор, спокойный Inter держит текст. Лайм появляется дозированно: это плейхед, а не заливка.",
+    "keyCharacteristics": [
+      "Тёмные и светлые блоки во всю ширину со скруглением 40 px.",
+      "Заголовки Unbounded 700 в обычном регистре.",
+      "Работа (шоурил, ролики) занимает место, которое у шаблона заняли бы иконки и цифры."
+    ],
+    "rules": [
+      {
+        "name": "The One Lime Rule",
+        "body": "Одно лаймовое место на экран (кнопка действия может быть вторым). Лайм никогда не светится.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ghost Is Not Text Rule",
+        "body": "Серые #222220, #504F4D, #757570 только для линий и декора.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sentence Case Rule",
+        "body": "Никакого капса и разрядки вне логотипа: ни в заголовках, ни в кнопках, ни в подписях.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Kicker Rule",
+        "body": "Над заголовком секции нет мелкой подписи, номера или метки. Заголовок говорит сам.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "**Do** показывать ролики вместо иконок и цифр.",
+      "**Do** держать одну строку фактов («100+ смонтированных роликов») вместо ряда больших цифр.",
+      "**Do** проверять, что цена в тенге не переносится и страница не шире экрана на 375 px."
+    ],
+    "donts": [
+      "**Don't** ставить подписи-кикеры, моно-метки, номера 01/02 и HUD-декор над заголовками.",
+      "**Don't** использовать вес 800–900, капс в заголовках и кнопках, свечения и неон.",
+      "**Don't** заводить квадраты с иконками и одинаковые карточки «иконка + заголовок + текст» как структуру страницы.",
+      "**Don't** смешивать больше двух шрифтов и использовать эмодзи вместо иконок."
+    ]
+  }
+}

@@ -22,6 +22,8 @@
   --line: rgb(10 10 10 / 0.12);
 
   --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Широкий гротеск только для крупных заголовков, 700 и обычный регистр */
+  --font-display: 'Unbounded', var(--font);
   --header-h: 72px;
   --gutter: 16px;
   --container: 1280px;
@@ -69,6 +71,14 @@ h1, h2, h3 {
   letter-spacing: -0.035em;
 }
 
+/* .lead__title — h2 формы заявки, тот же голос, что у заголовков секций */
+h1, .section-title, .lead__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
 p { margin: 0; }
 a { color: inherit; }
 ul, ol, dl, dd { margin: 0; padding: 0; list-style: none; }
@@ -102,7 +112,8 @@ html { scrollbar-color: var(--gray-3) var(--color-paper); }
 
 .section-head { margin-bottom: 48px; max-width: 820px; }
 
-.section-title { font-size: clamp(40px, 8vw, 80px); text-wrap: balance; }
+/* Unbounded шире Inter: при тех же px строка длиннее, поэтому размер ниже прежнего */
+.section-title { font-size: clamp(34px, 6.4vw, 72px); text-wrap: balance; }
 
 .section-intro {
   margin-top: 20px;

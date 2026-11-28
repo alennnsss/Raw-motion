@@ -21,7 +21,7 @@ useReveal(root)
       </div>
 
       <ul class="pricing__grid">
-        <li v-for="item in pricing" :key="item.service" class="price" :class="{ 'price--featured dark': item.units }" data-reveal>
+        <li v-for="item in pricing" :key="item.service" class="price" :class="{ 'price--featured': item.units }" data-reveal>
           <div class="price__head">
             <h3 class="price__name">{{ item.service }}</h3>
             <p class="price__note">{{ item.note }}</p>
@@ -31,7 +31,7 @@ useReveal(root)
               <p class="price__value">{{ formatPrice(item.price) }}</p>
               <p v-if="item.units" class="price__unit">{{ formatAmount(item.price / item.units) }} за ролик</p>
             </div>
-            <AppButton href="#lead" :variant="item.units ? 'primary' : 'dark'" arrow class="price__cta" @click="chooseTopic(item.service)">
+            <AppButton href="#lead" variant="dark" arrow class="price__cta" @click="chooseTopic(item.service)">
               Заказать<span class="visually-hidden">: {{ item.service }}</span>
             </AppButton>
           </div>
@@ -65,19 +65,22 @@ useReveal(root)
 .price__foot { display: grid; gap: 20px; }
 
 .price__value {
-  font-size: 40px;
-  font-weight: 600;
-  letter-spacing: -0.035em;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
   line-height: 1;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .price__unit { margin-top: 8px; color: var(--muted); }
 
-/* На светлой карточке тёмная кнопка должна быть чёрной, а не серой */
-.price:not(.price--featured) .price__cta { background: var(--color-ink); }
+/* На светлой и на лаймовой карточке кнопка чёрная, а не серая */
+.price__cta { background: var(--color-ink); }
 
-.price--featured { background: var(--color-bg); }
+/* Пакет — единственная лаймовая карточка: на лайме только чёрный текст */
+.price--featured { background: var(--color-accent); --muted: var(--color-ink); }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .price { transition: transform 0.25s var(--ease); }

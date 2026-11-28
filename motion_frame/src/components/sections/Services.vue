@@ -69,7 +69,6 @@ function onKeydown(event: KeyboardEvent) {
           tabindex="0"
         >
           <div class="panel__head">
-            <span class="panel__icon"><component :is="service.icon" :size="28" :stroke-width="1.75" aria-hidden="true" /></span>
             <h3 class="panel__title">{{ service.title }}</h3>
             <p class="panel__text">{{ service.description }}</p>
           </div>
@@ -126,17 +125,12 @@ function onKeydown(event: KeyboardEvent) {
 
 .panel__head { display: grid; gap: 16px; max-width: 40em; }
 
-.panel__icon {
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-sm);
-  background: var(--color-accent);
-  color: var(--color-ink);
+.panel__title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.6vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
-
-.panel__title { font-size: clamp(30px, 5vw, 52px); }
 
 .panel__text { font-size: 18px; color: var(--muted); }
 

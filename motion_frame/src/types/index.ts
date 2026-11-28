@@ -3,7 +3,6 @@ import type { Component } from 'vue'
 export interface Service {
   title: string
   description: string
-  icon: Component
   /** Что входит: короткие пункты для сетки в панели услуги */
   includes: string[]
 }

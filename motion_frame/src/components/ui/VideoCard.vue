@@ -13,11 +13,6 @@ useInViewAutoplay(video, toRef(props, 'paused'))
 
 <template>
   <article class="card">
-    <header class="card__top">
-      <h3 class="card__title">{{ item.title }}</h3>
-      <span class="card__tag">{{ item.category }}</span>
-    </header>
-
     <button v-if="item.preview" type="button" class="card__media" :aria-label="`Смотреть: ${item.title}`" @click="emit('open', item)">
       <video
         v-if="item.preview"
@@ -43,40 +38,22 @@ useInViewAutoplay(video, toRef(props, 'paused'))
         <span class="card__soon">Скоро здесь будет ролик</span>
       </span>
     </div>
+
+    <footer class="card__caption">
+      <h3 class="card__title">{{ item.title }}</h3>
+      <span class="card__tag">{{ item.category }}</span>
+    </footer>
   </article>
 </template>
 
 <style scoped>
-.card {
-  display: grid;
-  /* Шапка забирает лишнюю высоту: видео во всех карточках ряда на одной линии */
-  grid-template-rows: 1fr auto;
-  gap: 12px;
-  height: 100%;
-  padding: 12px;
-  border-radius: var(--radius);
-  background: var(--color-card);
-}
+.card { display: grid; gap: 14px; }
 
-.card__top {
-  display: flex;
-  flex-wrap: wrap-reverse;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 4px 4px 0;
-}
+.card__caption { display: grid; gap: 2px; padding-inline: 2px; }
 
 .card__title { font-size: 17px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.25; }
 
-.card__tag {
-  flex: none;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: var(--color-paper);
-  font-size: 13px;
-  font-weight: 500;
-}
+.card__tag { font-size: 14px; color: var(--muted); }
 
 .card__media {
   position: relative;
@@ -85,7 +62,7 @@ useInViewAutoplay(video, toRef(props, 'paused'))
   aspect-ratio: 9 / 16;
   padding: 0;
   border: 0;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
   overflow: hidden;
   background: var(--color-bg);
   color: var(--color-text);

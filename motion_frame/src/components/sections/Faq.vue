@@ -27,9 +27,8 @@ useReveal(root)
       </div>
 
       <div class="faq__list">
-        <details v-for="(item, i) in faq" :key="item.question" class="faq__item" data-reveal>
+        <details v-for="item in faq" :key="item.question" class="faq__item" data-reveal>
           <summary class="faq__question">
-            <span class="faq__num" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
             <span class="faq__q">{{ item.question }}</span>
             <span class="faq__icon" aria-hidden="true"><Plus :size="20" /></span>
           </summary>
@@ -62,19 +61,9 @@ useReveal(root)
 
 .faq__question::-webkit-details-marker { display: none; }
 
-/* Нумерация 01, 02… как в перечислениях: помогает глазу держать место в списке */
-.faq__num {
-  flex: none;
-  width: 2.2em;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
-}
-
 .faq__q { flex: 1; }
 
-.faq__answer { padding-left: calc(15px * 2.2 + 16px); }
+
 
 .faq__help {
   margin-top: 32px;
